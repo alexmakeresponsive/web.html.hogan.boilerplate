@@ -52,7 +52,12 @@ const gulpImagemin = require('gulp-imagemin');
      * */
 
     gulp.task( 'styles:clean', function() {
-        del(['./public/bundles/common/styles.css']).then(paths => {
+        del(
+            [
+                './public/styles/styles.theme.css',
+                './public/styles/styles.theme.min.css',
+            ]
+        ).then(paths => {
             console.log('Deleted files and folders:\n', paths.join('\n'));
         });
     });
@@ -80,23 +85,23 @@ const gulpImagemin = require('gulp-imagemin');
                 // 'resses/vendor/**/*.scss'
             ]
         )
-            .pipe(concat('styles.scss'))
+            .pipe(concat('styles.theme.scss'))
             .pipe(sass().on('error', sass.logError))
             .pipe(autoprefixer({
                 browsers: ['last 2 versions'],
                 cascade: false
             }))
-            .pipe(gulp.dest('./public/bundles/common/theme/styles'));
+            .pipe(gulp.dest('./public/styles'));
     });
 
 
     gulp.task( 'styles:nano', function() {
-        return gulp.src( './public/bundles/common/theme/styles/styles.css' )
+        return gulp.src( './public/styles/styles.theme.css' )
             .pipe( cssnano() )
             .pipe( rename({
                 suffix: ".min"
             }))
-            .pipe( gulp.dest( './public/bundles/common/theme/styles' ) );
+            .pipe( gulp.dest( './public/styles' ) );
     });
 
 
@@ -118,7 +123,12 @@ const gulpImagemin = require('gulp-imagemin');
      * */
 
     gulp.task( 'scripts:clean', function() {
-        del(['./public/bundles/common/theme/scripts/*.js']).then(paths => {
+        del(
+            [
+                './public/scripts/scripts.theme.js',
+                './public/scripts/scripts.theme.min.js',
+            ]
+        ).then(paths => {
             console.log('Deleted files and folders:\n', paths.join('\n'));
         });
     });
@@ -130,19 +140,19 @@ const gulpImagemin = require('gulp-imagemin');
                 './src/common/theme/scripts/scripts.js'
             ]
         )
-            .pipe(concat('scripts.js'))
-            .pipe(gulp.dest('./public/bundles/common/theme/scripts'));
+            .pipe(concat('scripts.theme.js'))
+            .pipe(gulp.dest('./public/scripts'));
     });
 
 
     gulp.task('scripts:uglify', function (cb) {
         pump([
-                gulp.src('./public/bundles/common/theme/scripts/scripts.js'),
+                gulp.src('./public/scripts/scripts.theme.js'),
                 uglify(),
                 rename({
                     suffix: ".min"
                 }),
-                gulp.dest('./public/bundles/common/theme/scripts')
+                gulp.dest('./public/scripts')
             ],
             cb
         );
@@ -175,9 +185,11 @@ const gulpImagemin = require('gulp-imagemin');
      * */
 
     gulp.task( 'vendor:styles:clean', function () {
-        del([
-            './public/bundles/common/vendor/styles/*.css',
-        ]).then(paths => {
+        del(
+            [
+                './public/styles/styles.vendor.min.css',
+            ]
+        ).then(paths => {
             console.log('Deleted files and folders:\n', paths.join('\n'));
         });
     });
@@ -217,8 +229,8 @@ const gulpImagemin = require('gulp-imagemin');
                 './src/common/vendor/styles.part2.min.css'
             ]
         )
-            .pipe(concat('styles.min.css', { sep: '\n/*--separator parts--*/\n' }))
-            .pipe(gulp.dest('./public/bundles/common/vendor/styles'))
+            .pipe(concat('styles.vendor.min.css', { sep: '\n/*--separator parts--*/\n' }))
+            .pipe(gulp.dest('./public/styles'))
     });
 
 
@@ -252,9 +264,11 @@ const gulpImagemin = require('gulp-imagemin');
      * */
 
     gulp.task( 'vendor:scripts:clean', function () {
-        del([
-            './public/bundles/common/vendor/scripts/*.js',
-        ]).then(paths => {
+        del(
+            [
+                './public/scripts/scripts.vendor.min.js',
+            ]
+        ).then(paths => {
             console.log('Deleted files and folders:\n', paths.join('\n'));
         });
     });
@@ -294,8 +308,8 @@ const gulpImagemin = require('gulp-imagemin');
                 './src/common/vendor/scripts.part2.min.js'
             ]
         )
-            .pipe(concatUtil('scripts.min.js', { sep: '\n/*--separator--*/\n' }))
-            .pipe(gulp.dest('./public/bundles/common/vendor/scripts'))
+            .pipe(concatUtil('scripts.vendor.min.js', { sep: '\n/*--separator--*/\n' }))
+            .pipe(gulp.dest('./public/scripts'))
     });
 
 
@@ -336,16 +350,16 @@ const gulpImagemin = require('gulp-imagemin');
  * */
 
 gulp.task( 'templates:clean', function() {
-    del(['./public/bundles/*.js']).then(paths => {
+    del(['./public/templates/*.js']).then(paths => {
         console.log('Deleted files and folders:\n', paths.join('\n'));
     });
 });
 
 gulp.task( 'templates:build', shell.task(
     [
-        'browserify -t brfs ./src/pages/Home/Home.js > ./public/bundles/home.bundle.js',
-        'browserify -t brfs ./src/pages/About/About.js > ./public/bundles/about.bundle.js',
-        'browserify -t brfs ./src/pages/Home/single/PostHome/PostHome.js > ./public/bundles/posthome.bundle.js',
+        'browserify -t brfs ./src/pages/Home/Home.js > ./public/templates/home.templates.js',
+        'browserify -t brfs ./src/pages/About/About.js > ./public/templates/about.templates.js',
+        'browserify -t brfs ./src/pages/Home/single/PostHome/PostHome.js > ./public/templates/posthome.templates.js',
     ]
 ));
 
@@ -429,8 +443,9 @@ gulp.task( 'watch:data', function () {
  		proxy: "http://localhost:5000",
          files: [
            './public/*.html',
-           './public/bundles/*.js',
-           './public/bundles/*.css',
+           './public/scripts/*.js',
+           './public/styles/*.css',
+           './public/templates/*.js',
          ],
          browser: "google chrome",
          port: 7000,

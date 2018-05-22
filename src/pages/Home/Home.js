@@ -16,7 +16,6 @@ var templateCompiled       = hogan.compile(template);
 var templateRendered       = templateCompiled.render(context);
 
 
-// module.exports = templateRendered;
 
 var root                   = document.getElementById('root');
 
