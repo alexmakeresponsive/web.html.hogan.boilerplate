@@ -2,17 +2,10 @@
   "name": "blomHoganTemplate",
   "version": "1.0.0",
   "description": "learn expresjs for work with statuc files. learn aphrodite jss lib",
-  "main": "app.js",
   "scripts": {
-    "server": "node server.js",
-    "js":   "browserify public/js/main.js -o public/js/bundle.js",
-    "jsfs": "browserify -t brfs src/ress/js/main.js > public/ress/js/bundle.js"
+    "start": "gulp start",
+    "posthome": "browserify -t brfs src/pages/Home/single/PostHome.js > public/bundles/posthome.bundle.js"
   },
   "author": "alexandr gorchakov",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "brfs": "^1.6.1",
-    "express": "^4.16.3",
-    "hogan.js": "^3.0.2"
-  }
+  "license": "UNLICENSED"
 }

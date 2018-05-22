@@ -1,0 +1,35 @@
+$fonts-path:        '../../../../assets/fonts';
+
+
+$font-family-1:     '';
+//._font-family-#{$number}
+
+
+$font-families: (
+
+        1: $font-family-1,
+
+);
+//._font-family-#{$number}
+
+
+$font-sizes-heights: (
+
+        11: (15),
+        15: (20)
+
+);
+//._font-#{$size}-#{$line-height}
+
+
+$font-family-body:  $font-family-1;
+
+
+$font-size-body:    16px;
+$line-height-body:  25px;
+
+
+$color-theme:       #555555;
+
+
+$color-body:        #ffffff;

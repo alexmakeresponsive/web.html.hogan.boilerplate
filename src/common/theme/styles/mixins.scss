@@ -1,0 +1,111 @@
+// =============================================================================
+// String Replace
+// =============================================================================
+
+@function str-replace($string, $search, $replace: "") {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace + str-replace(str-slice($string, $index + str-length($search)), $search, $replace);
+  }
+
+  @return $string;
+
+}
+
+// =============================================================================
+// Font Face
+// =============================================================================
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+  $src: null;
+
+  $extmods: (
+          eot: "?",
+          svg: "#" + str-replace($name, " ", "_")
+  );
+
+  $formats: (
+          otf: "opentype",
+          ttf: "truetype"
+  );
+
+  @each $ext in $exts {
+    $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+    $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+    $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+  }
+
+  @font-face {
+    font-family: quote($name);
+    font-style: $style;
+    font-weight: $weight;
+    src: $src;
+  }
+}
+
+
+
+// =============================================================================
+// Font
+// =============================================================================
+
+@mixin font(
+  //$family: $font-family__body,
+  $contour:        'sans-serif',
+  $size:           unquote($font-size-body),
+  $text-transform: none,
+  $line-height:    normal,
+  $letter-spacing: normal
+) {
+  //font-family: $family, unquote( $contour );
+  font-size:   ( $size );
+  font-weight: normal;
+
+  @if ( $text-transform == 'up' ) {
+    text-transform: uppercase;
+  }
+  @if ( $text-transform == 'cap' ) {
+    text-transform: capitalize;
+  }
+
+  @if ( type_of( $line-height ) == number ) {
+    line-height: $line-height;
+  }
+
+  @if ( type_of( $letter-spacing ) == number ) {
+    letter-spacing: $letter-spacing;
+  }
+
+}
+
+
+// =============================================================================
+// Absolute stretching
+// =============================================================================
+
+@mixin absolute_stretching {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+
+// =============================================================================
+// Absolute alignment
+// =============================================================================
+@mixin absolute_alignment {
+  @include absolute_stretching;
+  margin: auto;
+}
+
+
+// =============================================================================
+// Absolute max stretching
+// =============================================================================
+@mixin max_stretching {
+  max-width: 100%;
+  max-height: 100%;
+}

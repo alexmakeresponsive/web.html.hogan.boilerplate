@@ -1,15 +1,14 @@
+'use strict';
 
+// simple express server
 var express = require('express');
 var app = express();
+var router = express.Router();
 
-// app.get('/', function (req, res) {
-//     res.send('Hello World!');
-// });
+app.use(express.static( __dirname + '/public' ));
 
-app.use(express.static('public'));
-app.use(express.static('node_modules'));
-
-
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+app.get('/', function(req, res) {
+    res.sendfile('./public/index.html');
 });
+
+app.listen(5000);
