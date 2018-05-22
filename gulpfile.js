@@ -353,13 +353,31 @@ gulp.task( 'templates:clean', function() {
     });
 });
 
-gulp.task( 'templates:build', shell.task(
+gulp.task( 'templates:build:home', shell.task(
     [
         'browserify -t brfs ./src/templates/pages/Home/Home.js > ./public/templates/home.templates.js',
+    ]
+));
+
+gulp.task( 'templates:build:about', shell.task(
+    [
         'browserify -t brfs ./src/templates/pages/About/About.js > ./public/templates/about.templates.js',
+    ]
+));
+
+gulp.task( 'templates:build:posthome', shell.task(
+    [
         'browserify -t brfs ./src/templates/pages/Home/single/PostHome/PostHome.js > ./public/templates/posthome.templates.js',
     ]
 ));
+
+gulp.task( 'templates:build', function() {
+    runSequence(
+        'templates:build:home',
+        'templates:build:about',
+        'templates:build:posthome',
+    );
+});
 
 gulp.task( 'templates', function() {
     runSequence(
@@ -429,7 +447,7 @@ gulp.task( 'watch:data', function () {
 
 
  /**
-  * Watch tasks
+  * Server tasks
   * */
 
  gulp.task('server', ['browser-sync'], function () {
@@ -441,8 +459,8 @@ gulp.task( 'watch:data', function () {
  		proxy: "http://localhost:5000",
          files: [
            './public/*.html',
-           './public/design/*.js',
-           './public/design/*.css',
+           './public/design/**/*.js',
+           './public/design/**/*.css',
            './public/templates/*.js',
          ],
          browser: "google chrome",
@@ -467,7 +485,7 @@ gulp.task( 'watch:data', function () {
  });
 
  /**
- * Start tasks
+ * Server tasks
  * */
 
 
@@ -476,18 +494,38 @@ gulp.task( 'watch:data', function () {
  /**
  * Start tasks
  * */
+/*
+gulp.task( 'start',
+    [
+        'styles',
+        'scripts',
+        'templates',
+        'server'
+    ]
+);
+*/
 
-gulp.task( 'start', [
-    'styles',
-    'watch:styles',
-    'scripts',
-    'watch:scripts',
-    'templates',
-    'watch:templates',
-    'watch:data',
-    'server'
-] );
+gulp.task( 'start', function() {
+    runSequence(
+        'styles',
+        'scripts',
+        'templates',
+        'server',
+        // 'watch',
+        'watch:templates',
+    );
+});
+
 
 /**
- * Start tasks
+ * Watch tasks
  * */
+
+gulp.task( 'watch',
+    [
+        'watch:styles',
+        'watch:scripts',
+        // 'watch:templates',
+        'watch:data',
+    ]
+);
