@@ -4,7 +4,8 @@
   "description": "learn expresjs for work with statuc files. learn aphrodite jss lib",
   "scripts": {
     "start": "gulp start",
-    "posthome": "browserify -t brfs src/pages/Home/single/PostHome.js > public/bundles/posthome.bundle.js"
+    "posthome": "browserify -t brfs src/templates/pages/Home/single/PostHome.js > public/templates/posthome.templates.js",
+    "public": "serve public"
   },
   "author": "alexandr gorchakov",
   "license": "UNLICENSED"

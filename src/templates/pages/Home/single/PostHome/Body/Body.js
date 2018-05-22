@@ -5,12 +5,11 @@ var hogan          = require('hogan.js');
 var template = fs.readFileSync( __dirname + '/Body.html').toString();
 
 
-var dataPostsHome = require('../../../../../data/postshome');
+var dataPostsHome = require('../../../../../../data/postshome');
 
 var postId = window.location.search.replace( /^\D+/g, '') * 1;
 var posts  = dataPostsHome.posts;
 
-// console.log(posts);
 
 function findPostId(array, postId) {
     for (var i = 0; i < array.length; i++) {
@@ -21,7 +20,6 @@ function findPostId(array, postId) {
 
 var currentPostIndex = findPostId(posts, postId);
 
-// console.log(currentPostIndex);
 
 if ( currentPostIndex !== false ) {
     context = posts[currentPostIndex];
@@ -31,7 +29,6 @@ if ( currentPostIndex !== false ) {
     };
 }
 
-// console.log(context);
 
 
 var templateCompiled       = hogan.compile(template);

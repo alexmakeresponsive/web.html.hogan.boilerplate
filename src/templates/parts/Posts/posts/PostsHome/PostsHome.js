@@ -5,7 +5,7 @@ var hogan          = require('hogan.js');
 
 var template = fs.readFileSync( __dirname + '/PostsHome.html').toString();
 
-var context = require('../../../../data/postshome');
+var context = require('../../../../../data/postshome');
 
 var partials = {
     post: fs.readFileSync( __dirname + '/../../single/PostSingle1.html').toString()
