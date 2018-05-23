@@ -21,4 +21,6 @@ var templateRendered       = templateCompiled.render(context);
 
 var root                   = document.getElementById('root');
 
+// console.log(templateRendered);
+
 root.innerHTML = templateRendered;

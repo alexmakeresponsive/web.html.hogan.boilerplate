@@ -1,4 +1,5 @@
 var fs             = require('fs');
+// var writeFile          = require('write');
 var hogan          = require('hogan.js');
 
 var templateHeader      = require('../../parts/Header/Header');
@@ -18,5 +19,11 @@ var templateRendered       = templateCompiled.render(context);
 
 
 var root                   = document.getElementById('root');
+
+
+
+// console.log(templateRendered);
+
+
 
 root.innerHTML = templateRendered;
